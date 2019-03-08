@@ -13,6 +13,7 @@ public class TextExcel
 	    // Add your command loop here
 		Scanner consoleInput = new Scanner(System.in);
 		System.out.print("Enter a command: ");
-		String userInput = console.getInt
+		String userInput = consoleInput.next();
+		
 	}
 }
