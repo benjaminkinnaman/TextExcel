@@ -24,19 +24,19 @@ public class Spreadsheet implements Grid
 	public String processCommand(String command)
 	{
 		
-		return null;
+		return "";
 	}
 
 	public int getRows()
 	{
 	
-		return 0;
+		return 20;
 	}
 
 	public int getCols()
 	{
 		
-		return 0;
+		return 12;
 	}
 
 	public Cell getCell(Location loc)
