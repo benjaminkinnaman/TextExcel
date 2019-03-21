@@ -41,10 +41,9 @@ public class Spreadsheet implements Grid
 
 	public Cell getCell(Location loc)
 	{
-		
-//		String returnTest = loc.getCol() + Integer.toString(loc.getRow());
-		
-		return null;
+		int row = loc.getRow();
+		int col = loc.getCol();
+		return sheet [row][col];	
 	}
 
 	public String getGridText()
