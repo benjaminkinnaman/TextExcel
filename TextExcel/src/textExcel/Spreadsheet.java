@@ -48,6 +48,20 @@ public class Spreadsheet implements Grid
 
 	public String getGridText()
 	{
+		String gridText = "   |";
+		for (int i = 1; i < numColumns; i++) {							//Run this loop for each column.
+			char conversion = (char)(i + 64);							//Convert Numeric value to a char (probably won't work)
+			gridText = gridText + conversion + "         " + "|";		//Adds the char and nine spaces, as well as a blockade
+		}
+		gridText = gridText + "/n";
+		for (int i = 1; i < numRows; i++) {						//TODO: We need to check the length of the row number and fix issues there
+			gridText = gridText + Integer.toString(i);
+			//Add as many spaces as needed
+			gridText = gridText + "|";
+			for (int columnCount = 1; columnCount < numColumns; columnCount++) {	//Checks for each column of this row
+				
+			}
+		}
 		
 		return null;
 	}
