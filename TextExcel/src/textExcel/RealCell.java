@@ -1,15 +1,35 @@
+// @author Benjamin Kinnaman
+// @version March 2019
+
+
+
 package textExcel;
 
 public class RealCell implements Cell {
 
+	private String valueText;
+//	private double value;
+	
+	//text for spreadsheet cell display, must be exactly length 10
 	public String abbreviatedCellText() {
-		
-		return null;
+		String tempText = getDoubleValue() + "          ";
+		return tempText.substring(0,10);
 	}
 
-	public String fullCellText() {
-		
-		return null;
+	public String fullCellText() {	//Use valuetext?	
+		return valueText;
+	}
+	
+	public RealCell(String text) {
+		valueText = text;
+//		value = Double.parseDouble(text);
+	}
+
+	//converts the calculated value of the cell as a double
+	//acts as getter for double field
+	
+	public double getDoubleValue() {
+		return Double.parseDouble(valueText);
 	}
 
 }

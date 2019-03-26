@@ -23,7 +23,11 @@ public class Spreadsheet implements Grid
 
 	public String processCommand(String command)
 	{
-		
+		//make instance of location
+		//call inspection
+		//assign value
+		//clear sheet
+		//clear cell
 		return "";
 	}
 
@@ -39,7 +43,7 @@ public class Spreadsheet implements Grid
 		return 12;
 	}
 
-	public Cell getCell(Location loc)
+	public Cell getCell(Location loc)	//completed for 
 	{
 		int row = loc.getRow();
 		int col = loc.getCol();
