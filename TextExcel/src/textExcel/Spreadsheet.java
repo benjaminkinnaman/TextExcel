@@ -28,7 +28,7 @@ public class Spreadsheet implements Grid
 		//assign value
 		//clear sheet
 		//clear cell
-		return "";
+		return getGridText();//"";
 	}
 
 	public int getRows()
@@ -57,17 +57,27 @@ public class Spreadsheet implements Grid
 			char conversion = (char)(i + 64);							//Convert Numeric value to a char (probably won't work)
 			gridText = gridText + conversion + "         " + "|";		//Adds the char and nine spaces, as well as a blockade
 		}
-		gridText = gridText + "/n";
-		for (int i = 1; i < numRows; i++) {						//TODO: We need to check the length of the row number and fix issues there
-			gridText = gridText + Integer.toString(i);
-			//Add as many spaces as needed
+		gridText = gridText + "\n";
+		
+		for (int i = 0; i < numRows; i++) {	//for numRows	//TODO: We need to check the length of the row number and fix issues there
+			
+			gridText = gridText + Integer.toString(i + 1);	//adds the row number. adds 1 since the count falls behind
+			
+			int spacesNeededAfterRowNum = 3 - Integer.toString(i).length(); //Subtracts calculation of how long the row number is from 3
+			
+			for (int spaceNeedLoopCount = 0; spaceNeedLoopCount < spacesNeededAfterRowNum; spaceNeedLoopCount++) {	//loop to add spaces
+				gridText = gridText + " ";		//Loops adds spaces specified by variable.
+			}	//end of adding spaces
+			
 			gridText = gridText + "|";
 			for (int columnCount = 1; columnCount < numColumns; columnCount++) {	//Checks for each column of this row
-				
-			}
-		}
+				gridText = gridText +  sheet[i][columnCount].abbreviatedCellText() + "|";	//use abbreviatedCellText to get value
+			}	//endOf column check
+			
+			gridText = gridText + "\n";
+		}	//for numRows
 		
-		return null;
+		return gridText;
 	}
 
 }
