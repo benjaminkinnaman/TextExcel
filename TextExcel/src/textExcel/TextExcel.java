@@ -12,10 +12,11 @@ public class TextExcel
 	{
 	    // Add your command loop here
 		boolean quitStatus = false;
+		Scanner input = new Scanner(System.in);
 		Spreadsheet sheet = new Spreadsheet();
 	    while(quitStatus == false) {
 	    	System.out.println("Enter a command.");
-	    	Scanner input = new Scanner(System.in);
+	    	
 	    	String consoleInput = input.nextLine();
 	    	if (!consoleInput.equals("quit")) {
 	    		System.out.println(sheet.processCommand(consoleInput));

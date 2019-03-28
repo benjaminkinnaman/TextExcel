@@ -4,15 +4,16 @@ public class TextCell implements Cell {
 
 	private String text;
 	
-	public TextCell() {
+	public TextCell(String text) {
+		this.text = text;
 		
 	}
 
 	public String abbreviatedCellText() {
-		System.out.println();
-		String[] textSplit = new String[3];
-		textSplit = text.split("\"");
-		return textSplit[2];
+	
+		String temp = text.substring(1,text.length()-1);
+		temp += "          ";
+		return temp.substring(0,10);
 	}
 
 	public String fullCellText() {

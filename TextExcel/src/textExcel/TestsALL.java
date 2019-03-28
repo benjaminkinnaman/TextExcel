@@ -251,7 +251,7 @@ public class TestsALL
             Cell cellFirst = grid.getCell(new TestLocation(0,0));
             Cell cellSecond = grid.getCell(new TestLocation(7, 3));
             assertEquals("cellFirst inspection text after clear", "", cellFirst.fullCellText());
-            assertEquals("cellSecond inspection text after clear", "\"second\"", cellSecond.fullCellText());
+           assertEquals("cellSecond inspection text after clear", "\"second\"", cellSecond.fullCellText());
         }
 
         @Test
