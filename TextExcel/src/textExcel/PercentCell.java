@@ -6,12 +6,13 @@ public class PercentCell extends RealCell {
 	
 	//text for spreadsheet cell display, must be exactly length 10
 	public String abbreviatedCellText() {
-		String tempText = getDoubleValue() + "          ";
+		String[] percentSplit = valueText.split(".");
+		String tempText = percentSplit[0] + "%          ";
 		return tempText.substring(0,10);
 	}
 
-	public String fullCellText() {	//Use valuetext?	
-		return valueText;
+	public String fullCellText() {	//Use valuetext? no. //Convert to double, then divide by 100	
+		return (getDoubleValue()/100);
 	}
 	
 	public PercentCell(String text) {
