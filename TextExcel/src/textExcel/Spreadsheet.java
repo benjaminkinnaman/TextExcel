@@ -33,22 +33,27 @@ public class Spreadsheet implements Grid
 		} else if (commandLine.length == 1) {	//A10
 			Location loc = new SpreadsheetLocation(commandLine[0]);
 			return sheet [loc.getRow()] [loc.getCol()].fullCellText();
+		
 		} else if (commandLine.length == 2) {	//clear_A10
 			System.out.println("Cell cleared.");
 			Location loc = new SpreadsheetLocation(commandLine[1]);
 			sheet [loc.getRow()] [loc.getCol()] = new EmptyCell();
+		
 		} else if (commandLine.length == 3) {	//A10_=_"   "
 			Location loc = new SpreadsheetLocation(commandLine[0]);
-			sheet [loc.getRow()] [loc.getCol()] = new TextCell(commandLine[2]);
+//Check operation type			
+			if (commandLine[2].charAt(0) == ('\"')) {	//This is a text cell
+				sheet [loc.getRow()] [loc.getCol()] = new TextCell(commandLine[2]);
+			} else if (commandLine[2].charAt(commandLine[2].length() + 1) == ('%')){//Percent cell. Checks last char is it's %
+				sheet [loc.getRow()] [loc.getCol ()] = new PercentCell(commandLine[2]);
+			} else if (commandLine[2].contains(".")) {
+				sheet [loc.getRow()] [loc.getCol()] = new ValueCell(commandLine[2]);
+			}
+			
 			
 		}
 		
 		
-		//make instance of location
-		//call inspection
-		//assign value
-		//clear sheet
-		//clear cell
 		return getGridText();
 	}
 
