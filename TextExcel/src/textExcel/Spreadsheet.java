@@ -45,8 +45,8 @@ public class Spreadsheet implements Grid
 			if (commandLine[2].charAt(0) == ('\"')) {	//This is a text cell
 				sheet [loc.getRow()] [loc.getCol()] = new TextCell(commandLine[2]);
 			} else if (commandLine[2].charAt(commandLine[2].length() + 1) == ('%')){//Percent cell. Checks last char is it's %
-				sheet [loc.getRow()] [loc.getCol ()] = new PercentCell(commandLine[2]);
-			} else if (commandLine[2].contains(".")) {
+				sheet [loc.getRow()] [loc.getCol ()] = new PercentCell(commandLine[2]); //this is a PercentCell
+			} else if (commandLine[2].contains(".")) {	//this is a ValueCell
 				sheet [loc.getRow()] [loc.getCol()] = new ValueCell(commandLine[2]);
 			}
 			
