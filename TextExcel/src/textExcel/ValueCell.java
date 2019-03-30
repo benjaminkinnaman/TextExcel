@@ -13,7 +13,7 @@ public class ValueCell extends RealCell {
 
 	public String abbreviatedCellText() {
 	
-		String temp = value.substring(1,value.length()-1);
+		String temp = value.substring(0,value.length());
 		temp += "          ";
 		return temp.substring(0,10);
 	}
