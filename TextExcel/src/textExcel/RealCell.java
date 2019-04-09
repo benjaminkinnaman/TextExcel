@@ -8,7 +8,11 @@ package textExcel;
 public class RealCell implements Cell {
 
 	private String valueText;
-//	private double value;
+
+	public RealCell(String text) {
+		valueText = text;
+
+	}
 	
 	//text for spreadsheet cell display, must be exactly length 10
 	public String abbreviatedCellText() {
@@ -20,10 +24,7 @@ public class RealCell implements Cell {
 		return valueText;
 	}
 	
-	public RealCell(String text) {
-		valueText = text;
-//		value = Double.parseDouble(text);
-	}
+	
 
 	//converts the calculated value of the cell as a double
 	//acts as getter for double field

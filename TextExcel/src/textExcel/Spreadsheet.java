@@ -48,7 +48,7 @@ public class Spreadsheet implements Grid
 				sheet [loc.getRow()] [loc.getCol ()] = new PercentCell(commandLine[2]); //this is a PercentCell
 		//	System.out.println("Percent cell passed.");
 			} else if (commandLine[2].contains("(")) {	//this is a FormulaCell
-				sheet [loc.getRow()] [loc.getCol()] = new FormulaCell(commandLine[2]);
+				sheet [loc.getRow()] [loc.getCol()] = new FormulaCell(commandLine[2], this);
 			} else {
 				sheet [loc.getRow()] [loc.getCol()] = new ValueCell(commandLine[2]);
 			}
