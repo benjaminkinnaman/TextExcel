@@ -29,10 +29,10 @@ public class FormulaCell extends RealCell {
 		ArrayList<Double> cellValues = new ArrayList<>();
 		
 		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added together.
-			String tempCell = splitFormula[4].substring(0,2);
+			String tempCell = splitFormula[4].substring(0,2); //Takes the primary cell
 			char primaryCol = tempCell.charAt(0);	//Letter	
 			int  primaryRow;						//Number
-			if (tempCell.substring(2).equals("-")) {	//Removes dash, if it exists, then creates primaryRow
+			if (tempCell.substring(2).equals("-")) {	//Removes dash, if it exists, then initializes primaryRow
 				tempCell = tempCell.substring(0,1);
 				primaryRow = tempCell.charAt(1);
 			}	else {
@@ -43,15 +43,19 @@ public class FormulaCell extends RealCell {
 			int  secondaryRow;
 			
 			if (primaryRow <= 9 && (splitFormula[4].length() == 5)) {	//Primary is single digit, Secondary single
-				
+				secondaryCol = splitFormula[4].charAt(3);
+				secondaryRow = splitFormula[4].charAt(4);
 			}	else if (primaryRow > 9 && (splitFormula[4].length() == 6)) {	//Primary is double digit, Secondary single
-				
+				secondaryCol = splitFormula[4].charAt(4);
+				secondaryRow = splitFormula[4].charAt(5);
 			}	else if (primaryRow <= 9 && (splitFormula[4].length() == 6)) { //Primary is single digit, Secondary Double
-				
+				secondaryCol = splitFormula[4].charAt(3);
+				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[4].charAt(4)) + Integer.toString(splitFormula[4].charAt(5)));
 			}	else if (primaryRow > 9 && (splitFormula[4].length() == 7)) { //Primary is double digit, Secondary Double
-				
+				secondaryCol = splitFormula[4].charAt(4);
+				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[4].charAt(5)) + Integer.toString(splitFormula[4].charAt(6)));
 			}
-			
+		/*At this point in the code, we have the two cells stored in piece in variables.*/	
 		
 			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
 				   int sum = (int)/*might remove, auto fix*/ (cellValues.get(i) + cellValues.get(i + 1));
