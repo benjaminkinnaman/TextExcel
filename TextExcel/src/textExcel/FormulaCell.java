@@ -24,9 +24,18 @@ public class FormulaCell extends RealCell {
 		String text = fullCellText();
 		String[] splitFormula = text.split(" ");
 		double answer = Double.parseDouble(splitFormula[1]);
+		public ArrayList<Double> list = new ArrayList<>();
 		
-		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added together
+		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added togetherh
 			
+			
+			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
+				   int sum = cellValues.get(i) + list.get(i + 1);
+				   cellValues.set(i, sum);
+				   cellValues.remove(i + 1);
+				   answer = sum;
+				}
+		
 		} else if (splitFormula[1].equals("AVG")) {	//Find the average of the cells stated.
 			//Logic: Add together, and divide by the number of cells. Code from SUM may be reusable.
 			
