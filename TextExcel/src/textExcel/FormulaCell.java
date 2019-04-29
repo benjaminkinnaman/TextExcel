@@ -39,7 +39,7 @@ public class FormulaCell extends RealCell {
 				primaryRow = Integer.parseInt(tempCell.substring(1,2));
 			}
 			//Now begins decoding the second cell request
-			char secondaryCol;
+			char secondaryCol = 65;
 			int  secondaryRow;
 			
 			if (primaryRow <= 9 && (splitFormula[4].length() == 5)) {	//Primary is single digit, Secondary single
@@ -56,7 +56,15 @@ public class FormulaCell extends RealCell {
 				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[4].charAt(5)) + Integer.toString(splitFormula[4].charAt(6)));
 			}
 		/*At this point in the code, we have the two cells stored in piece in variables.*/	
-		
+			for(int i = primaryCol; i <= secondaryCol; i++) {	//Runs a cycle for every column. i = current column
+				if (i == primaryCol && i == secondaryCol) {	//If the specified column is both the first and last column
+					for (int r = 1; r <=20; r++) {	//For each row, check the cell and add it to the list.
+						Location loc = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
+						cellValues.add((double) sheet[r][i].fullCellText());	//why wont this work???
+					}
+				}
+			}
+			
 			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
 				   int sum = (int)/*might remove, auto fix*/ (cellValues.get(i) + cellValues.get(i + 1));
 				   cellValues.set(i, (double)/*<--might remove, auto fix*/ sum);
