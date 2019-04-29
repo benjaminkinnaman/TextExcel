@@ -47,7 +47,8 @@ public class Spreadsheet implements Grid
 			} else if (commandLine[2].charAt(commandLine[2].length() - 1) == ('%')){//Percent cell. Checks last char is it's %
 				sheet [loc.getRow()] [loc.getCol ()] = new PercentCell(commandLine[2]); //this is a PercentCell
 		//	System.out.println("Percent cell passed.");
-			} else if (commandLine[2].contains("(")) {	//this is a FormulaCell
+			} else if (commandLine[2].contains("(")) {	//this is a FormulaCell 
+			  //L14 = ( SUM B6-C12 )//C12 = ( AVG A1-A5 )//A10 = ( 34 + 7)//
 				sheet [loc.getRow()] [loc.getCol()] = new FormulaCell(commandLine[2], this);
 			} else {
 				sheet [loc.getRow()] [loc.getCol()] = new ValueCell(commandLine[2]);

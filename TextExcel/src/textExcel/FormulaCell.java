@@ -1,5 +1,7 @@
 package textExcel;
 
+import java.util.ArrayList;
+
 public class FormulaCell extends RealCell {
 
 	private Spreadsheet sheet;
@@ -24,14 +26,36 @@ public class FormulaCell extends RealCell {
 		String text = fullCellText();
 		String[] splitFormula = text.split(" ");
 		double answer = Double.parseDouble(splitFormula[1]);
-		public ArrayList<Double> list = new ArrayList<>();
+		ArrayList<Double> cellValues = new ArrayList<>();
 		
-		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added togetherh
+		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added together.
+			String tempCell = splitFormula[4].substring(0,2);
+			char primaryCol = tempCell.charAt(0);	//Letter	
+			int  primaryRow;						//Number
+			if (tempCell.substring(2).equals("-")) {	//Removes dash, if it exists, then creates primaryRow
+				tempCell = tempCell.substring(0,1);
+				primaryRow = tempCell.charAt(1);
+			}	else {
+				primaryRow = Integer.parseInt(tempCell.substring(1,2));
+			}
+			//Now begins decoding the second cell request
+			char secondaryCol;
+			int  secondaryRow;
 			
+			if (primaryRow <= 9 && (splitFormula[4].length() == 5)) {	//Primary is single digit, Secondary single
+				
+			}	else if (primaryRow > 9 && (splitFormula[4].length() == 6)) {	//Primary is double digit, Secondary single
+				
+			}	else if (primaryRow <= 9 && (splitFormula[4].length() == 6)) { //Primary is single digit, Secondary Double
+				
+			}	else if (primaryRow > 9 && (splitFormula[4].length() == 7)) { //Primary is double digit, Secondary Double
+				
+			}
 			
+		
 			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
-				   int sum = cellValues.get(i) + list.get(i + 1);
-				   cellValues.set(i, sum);
+				   int sum = (int)/*might remove, auto fix*/ (cellValues.get(i) + cellValues.get(i + 1));
+				   cellValues.set(i, (double)/*<--might remove, auto fix*/ sum);
 				   cellValues.remove(i + 1);
 				   answer = sum;
 				}
