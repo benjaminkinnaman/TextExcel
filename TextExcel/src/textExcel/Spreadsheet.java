@@ -38,6 +38,7 @@ public class Spreadsheet implements Grid
 			System.out.println("Cell cleared.");
 			Location loc = new SpreadsheetLocation(commandLine[1]);
 			sheet [loc.getRow()] [loc.getCol()] = new EmptyCell();
+			System.out.println(sheet[loc.getRow()][loc.getCol()]);
 		
 		} else if (commandLine.length == 3) {	//A10_=_"   "
 			Location loc = new SpreadsheetLocation(commandLine[0]);
