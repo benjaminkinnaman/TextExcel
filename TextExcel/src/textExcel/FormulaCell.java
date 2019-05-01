@@ -25,11 +25,11 @@ public class FormulaCell extends RealCell {
 	public double getDoubleValue() {
 		String text = fullCellText();
 		String[] splitFormula = text.split(" ");
-		double answer = Double.parseDouble(splitFormula[1]);
+		double answer = 0;
 		ArrayList<Double> cellValues = new ArrayList<>();
-		
+		System.out.println(splitFormula[0] + " " + splitFormula[1]  + " " +  splitFormula[2]);
 		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added together.
-			String tempCell = splitFormula[4].substring(0,2); //Takes the primary cell
+			String tempCell = splitFormula[2].substring(0,2); //Takes the primary cell
 			char primaryCol = tempCell.charAt(0);	//Letter	
 			int  primaryRow;						//Number
 			if (tempCell.substring(2).equals("-")) {	//Removes dash, if it exists, then initializes primaryRow
@@ -40,31 +40,58 @@ public class FormulaCell extends RealCell {
 			}
 			//Now begins decoding the second cell request
 			char secondaryCol = 65;
-			int  secondaryRow;
+			int  secondaryRow = 1;
 			
-			if (primaryRow <= 9 && (splitFormula[4].length() == 5)) {	//Primary is single digit, Secondary single
-				secondaryCol = splitFormula[4].charAt(3);
-				secondaryRow = splitFormula[4].charAt(4);
-			}	else if (primaryRow > 9 && (splitFormula[4].length() == 6)) {	//Primary is double digit, Secondary single
-				secondaryCol = splitFormula[4].charAt(4);
-				secondaryRow = splitFormula[4].charAt(5);
-			}	else if (primaryRow <= 9 && (splitFormula[4].length() == 6)) { //Primary is single digit, Secondary Double
-				secondaryCol = splitFormula[4].charAt(3);
-				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[4].charAt(4)) + Integer.toString(splitFormula[4].charAt(5)));
-			}	else if (primaryRow > 9 && (splitFormula[4].length() == 7)) { //Primary is double digit, Secondary Double
-				secondaryCol = splitFormula[4].charAt(4);
-				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[4].charAt(5)) + Integer.toString(splitFormula[4].charAt(6)));
+			if (primaryRow <= 9 && (splitFormula[2].length() == 5)) {	//Primary is single digit, Secondary single
+				secondaryCol = splitFormula[2].charAt(3);
+				secondaryRow = splitFormula[2].charAt(4);
+			}	else if (primaryRow > 9 && (splitFormula[2].length() == 6)) {	//Primary is double digit, Secondary single
+				secondaryCol = splitFormula[2].charAt(4);
+				secondaryRow = splitFormula[2].charAt(5);
+			}	else if (primaryRow <= 9 && (splitFormula[2].length() == 6)) { //Primary is single digit, Secondary Double
+				secondaryCol = splitFormula[2].charAt(3);
+				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[2].charAt(4)) + Integer.toString(splitFormula[2].charAt(5)));
+			}	else if (primaryRow > 9 && (splitFormula[2].length() == 7)) { //Primary is double digit, Secondary Double
+				secondaryCol = splitFormula[2].charAt(4);
+				secondaryRow = Integer.parseInt(Integer.toString(splitFormula[2].charAt(5)) + Integer.toString(splitFormula[2].charAt(6)));
 			}
 		/*At this point in the code, we have the two cells stored in piece in variables.*/	
 			for(int i = primaryCol; i <= secondaryCol; i++) {	//Runs a cycle for every column. i = current column
-				if (i == primaryCol && i == secondaryCol) {	//If the specified column is both the first and last column
+				//Below: If the specified column is both the first and last column
+				if (i == primaryCol && i == secondaryCol) {	
+					for (int r = primaryRow; r <= secondaryRow; r++) {	//For each row, check the cell and add it to the list.
+						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
+/*PROBLEM LINE*/		cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+					}
+				}
+				//Below: If the column being currently processed is the first column specified by the user.
+				if (i == primaryCol && i != secondaryCol) {	
+					for (int r = primaryRow; r <=20; r++) {	//For each row, check the cell and add it to the list.
+						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
+						sheet.getCell(loca);
+						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+					}
+				}
+				//Below: If the column being currently processed is the NOT first column NOR the last column specified by the user.
+				if (i != primaryCol && i != secondaryCol) {	
 					for (int r = 1; r <=20; r++) {	//For each row, check the cell and add it to the list.
-						Location loc = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
-						cellValues.add((double) sheet[r][i].fullCellText());	//why wont this work???
+						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
+						sheet.getCell(loca);
+						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+					}
+				}
+				//Below: If the column being currently processed is the last column specified by the user.
+				if (i == primaryCol && i != secondaryCol) {	
+					for (int r = 1; r <= secondaryRow; r++) {	//For each row, check the cell and add it to the list.
+						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
+						sheet.getCell(loca);
+						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
 					}
 				}
 			}
-			
+			//At this point, every number within the specified range should have been added to the list
+			//The for loop below should add together all of the values and set the answer variable to the sum.
+			//Unfortunately I'm not feeling clever enough to stuff this all into a method to reuse with AVG.
 			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
 				   int sum = (int)/*might remove, auto fix*/ (cellValues.get(i) + cellValues.get(i + 1));
 				   cellValues.set(i, (double)/*<--might remove, auto fix*/ sum);
@@ -78,7 +105,8 @@ public class FormulaCell extends RealCell {
 		} else {
 		//This is an arithmetic problem. Find the appropriate function and procedd with execution.
 		//REMEMBER! Multiple functions may be usable. Solve in groups of two. May require recalling methods.
-		for (int i = 2; i < splitFormula.length - 1; i+=2) {
+			answer = Double.parseDouble(splitFormula[1]);
+			for (int i = 2; i < splitFormula.length - 1; i+=2) {
 				if (splitFormula[i].equals("+")) {
 					answer += Double.parseDouble(splitFormula[i+1]);
 				} else if (splitFormula[i].equals("-")) {
