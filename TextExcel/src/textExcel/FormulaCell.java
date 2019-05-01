@@ -26,8 +26,8 @@ public class FormulaCell extends RealCell {
 		String text = fullCellText();
 		String[] splitFormula = text.split(" ");
 		double answer = 0;
-		ArrayList<Double> cellValues = new ArrayList<>();
-		System.out.println(splitFormula[0] + " " + splitFormula[1]  + " " +  splitFormula[2]);
+		
+		
 		if (splitFormula[1].equals("SUM")) {	//Find the sum of the range of cells added together.
 			String tempCell = splitFormula[2].substring(0,2); //Takes the primary cell
 			char primaryCol = tempCell.charAt(0);	//Letter	
@@ -61,7 +61,7 @@ public class FormulaCell extends RealCell {
 				if (i == primaryCol && i == secondaryCol) {	
 					for (int r = primaryRow; r <= secondaryRow; r++) {	//For each row, check the cell and add it to the list.
 						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
-/*PROBLEM LINE*/		cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+						answer += Double.parseDouble(sheet.getCell(loca).fullCellText());
 					}
 				}
 				//Below: If the column being currently processed is the first column specified by the user.
@@ -69,7 +69,7 @@ public class FormulaCell extends RealCell {
 					for (int r = primaryRow; r <=20; r++) {	//For each row, check the cell and add it to the list.
 						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
 						sheet.getCell(loca);
-						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+						answer += Double.parseDouble(sheet.getCell(loca).fullCellText());
 					}
 				}
 				//Below: If the column being currently processed is the NOT first column NOR the last column specified by the user.
@@ -77,7 +77,7 @@ public class FormulaCell extends RealCell {
 					for (int r = 1; r <=20; r++) {	//For each row, check the cell and add it to the list.
 						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
 						sheet.getCell(loca);
-						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+						answer += Double.parseDouble(sheet.getCell(loca).fullCellText());
 					}
 				}
 				//Below: If the column being currently processed is the last column specified by the user.
@@ -85,20 +85,11 @@ public class FormulaCell extends RealCell {
 					for (int r = 1; r <= secondaryRow; r++) {	//For each row, check the cell and add it to the list.
 						Location loca = new SpreadsheetLocation(Integer.toString(i)+Integer.toString(r));
 						sheet.getCell(loca);
-						cellValues.add(Double.parseDouble(sheet.getCell(loca).fullCellText()));	//This should add the requested cell to the list.
+						answer += Double.parseDouble(sheet.getCell(loca).fullCellText());
 					}
 				}
 			}
-			//At this point, every number within the specified range should have been added to the list
-			//The for loop below should add together all of the values and set the answer variable to the sum.
-			//Unfortunately I'm not feeling clever enough to stuff this all into a method to reuse with AVG.
-			for(int i = 0; i < (cellValues.size() - 1); i++)  {	//Adds together every element on the list.
-				   int sum = (int)/*might remove, auto fix*/ (cellValues.get(i) + cellValues.get(i + 1));
-				   cellValues.set(i, (double)/*<--might remove, auto fix*/ sum);
-				   cellValues.remove(i + 1);
-				   answer = sum;
-				}
-		
+
 		} else if (splitFormula[1].equals("AVG")) {	//Find the average of the cells stated.
 			//Logic: Add together, and divide by the number of cells. Code from SUM may be reusable.
 			
